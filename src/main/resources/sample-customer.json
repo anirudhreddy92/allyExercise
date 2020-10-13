@@ -1,0 +1,20 @@
+{
+      "firstName": "peter",
+      "lastName": "parker",
+      "contacts": [
+        {
+          "isPrimaryContact": true,
+          "phoneNumber": 1234567892,
+          "homeAddress": "1234 Marvel st",
+          "zip": 123456,
+          "state": "NY"
+        },
+        {
+          "isPrimaryContact": false,
+          "phoneNumber": 1234567892,
+          "homeAddress": "852 Sony st",
+          "zip": 123456,
+          "state": "NY"
+        }
+      ]
+    }
