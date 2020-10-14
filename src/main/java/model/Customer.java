@@ -5,10 +5,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 public class Customer {
+    private Integer id;
     private String firstName;
     private String lastName;
     private String middleName;
-    private Integer id;
     @JsonProperty("contacts")
     private List<Contact> contactList;
 

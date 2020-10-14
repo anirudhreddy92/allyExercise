@@ -1,18 +1,15 @@
 package dao;
 
+import model.Contact;
 import model.Customer;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.dbutils.handlers.BeanListHandler;
-import org.apache.commons.dbutils.handlers.ScalarHandler;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
-public class CustomerDao {
+public class ContactDao {
 
     public static List<Customer> getCustomers() throws SQLException, ClassNotFoundException {
         Connection connection = MysqlConnection.getConnnection();
@@ -25,17 +22,23 @@ public class CustomerDao {
         return customerList;
     }
 
-    public static int insertCustomers(Customer customer) throws SQLException, ClassNotFoundException {
+    public static int insertContact(List<Contact> contacts, Integer customerId) throws SQLException, ClassNotFoundException {
         Connection connection = MysqlConnection.getConnnection();
         QueryRunner queryRunner = new QueryRunner();
-        ScalarHandler<Integer> scalarHandler = new ScalarHandler<>();
 
-        String insertString = "INSERT INTO customer (firstName, lastName, middleName) VALUES (?, ?, ?)";
-        String customerIdQuery = "SELECT id FROM customer WHERE firstName = ? AND lastName = ? AND middleName = ?";
-        queryRunner.update(connection, insertString, customer.getFirstName(), customer.getLastName(), customer.getMiddleName());
-        Integer customerId = queryRunner.query(connection, customerIdQuery, scalarHandler, customer.getFirstName(), customer.getLastName(), customer.getMiddleName());
-        ContactDao.insertContact(customer.getContactList(), customerId);
+        String insertString = "INSERT INTO contact (customerId, isPrimaryContact, phoneNumber, secondaryPhoneNumber, homeAddress, zip, state ) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+        contacts.forEach(contact -> {
+            try {
+                queryRunner.update(connection, insertString, customerId , contact.getPrimaryContact(), contact.getPhoneNumber(), contact.getSecondaryPhoneNumber(), contact.getHomeAddress(),
+                        contact.getZip(), contact.getState());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        });
         return 0;
-    }
 
+    }
 }

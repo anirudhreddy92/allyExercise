@@ -1,6 +1,7 @@
 {
       "firstName": "peter",
       "lastName": "parker",
+      "middleName": "L",
       "contacts": [
         {
           "isPrimaryContact": true,
